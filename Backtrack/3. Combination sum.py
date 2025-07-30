@@ -8,6 +8,41 @@
 #Input: candidates = [2,3,6,7], target = 7
 #Output: [[2,2,3],[7]]
 
+# Classical Wrong Answer:
+class Solution:
+    def combinationSum(self, candidates: list[int], target: int) -> list[list[int]]:
+        res = []
+        def dfs(comb,total=0):
+            if total > target:
+                return
+            if total == target:
+                res.append(comb)
+            for i in range(len(candidates)):
+                comb.append(candidates[i])
+                dfs(comb,total+candidates[i])
+            return res
+        return dfs([],0)
+# 在同一层循环里每次都从 0 开始枚举，导致：顺序被打乱，出现 [2,3,2] 与 [2,2,3] 这种“不同顺序的重复组合”
+# 每次向下递归时，只能从当前的位置往后开始，例如2，3之后不能选择2，加入start指针
+
+class Solution:
+    def combinationSum(self, candidates: list[int], target: int) -> list[list[int]]:
+        res = []
+        def dfs(idx,comb,total=0):
+            if total > target:
+                return
+            if total == target:
+                res.append(comb.copy())
+                #或者使用浅拷贝： comb[:] comb中的元素本为可变对象
+                return
+            for i in range(idx,len(candidates)):
+                comb.append(candidates[i]) #选择
+                dfs(i,comb,total+candidates[i]) #递归
+                comb.pop()  #撤销选择
+        dfs(0,[],0)
+        return res
+    
+
 class Solution:
     def combinationSum(self, candidates: list[int], target: int) -> list[list[int]]:
         res = []
