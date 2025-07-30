@@ -18,6 +18,7 @@ class Solution:
         def dfs(idx,path = []):
             if idx == len(s): #参数的参考：需要一个boundary停止参数，这里是操作到的字符的顺序，如果操作到最后一个了就i停止
                 res.append(path.copy())
+                
             for i in range(idx,len(s)):
                 if isPalindrome(s,idx,i):
                     #核心的回溯三部曲：从idx到i是回文后，递归的下一步从i+1开始，并且在之后要对path进行回溯撤销
