@@ -5,7 +5,7 @@
 
 
 class Solution:
-    def letterCombinations(self, digits: str) -> List[str]:
+    def letterCombinations(self, digits: str) -> list[str]:
 
       # if no input
       if not digits:
@@ -49,4 +49,33 @@ class Solution:
       #d - boundary
 # c   #e - boundary
       #f - boundary
-      
+
+map = ['','','abc','def','ghi','jkl']
+class Solution:
+    def letterCombinations(self, digits: str) -> list[str]:
+        n = len(digits)
+
+        # 提前存储好path的路径
+        path = [''] * n
+        res = []
+        
+        if not digits: return []
+            
+        def dfs(i):
+
+            # path是可变对象，每次dfs只是原地修改path[i]，而列表本身地址不变。
+            if i == n:
+                res.append(''.join(path))
+                return
+
+            # 对digit[i]中的字母进行循环，
+            for j in map[int(digits[i])]:
+
+                # path的第i的元素设定为digit[i]中的j 第一层循环
+                path[i] = j
+
+                #嵌套第二层，进行下一层循环，两层之间连接
+                dfs(i+1)
+        dfs(0)
+        return res
+            
