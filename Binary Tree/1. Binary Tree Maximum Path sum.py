@@ -14,7 +14,11 @@
            /  \
           15   7
 #核心思路：return是与上层调用者之间的联系，在单次调用内部写清楚内部最大值的操作
-
+#分析：从根节点-10开始，如果最大组合经过根节点，那么在root.left/root.right后续的分支中，一定只能选择一支；
+                #所以返回根节点的分支最大值一定是左右分支的单向分支，即return的时候应该返回node.va;+max(f(node.left)+f(node.right))
+#而对于root与root.left/root.right的内部关系来说，需要考虑线路同时经过三个点的情况，因此在更新最大值时应该更新node.val_f(node.left)+f(node.right)
+#确定的根节点不需要套用函数，根节点的分支需要调用函数，直到边界条件 if not node: return 0
+                
 class TreeNode:
     def __init__(self, val=0, left=None, right=None):
         self.val = val
